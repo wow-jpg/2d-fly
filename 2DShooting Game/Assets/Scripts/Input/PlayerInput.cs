@@ -12,6 +12,9 @@ namespace ZJ.Input
         public event UnityAction<Vector2> onMove;
         public event UnityAction onStopMove;
 
+        public event UnityAction onFire;
+        public event UnityAction onStopFire;
+
         InputActions inputActions;
 
         private void OnEnable()
@@ -59,6 +62,21 @@ namespace ZJ.Input
             }
         }
 
+        public void OnFire(InputAction.CallbackContext context)
+        {
+            //判断回调阶段  是否等于  正在按下
+            if (context.phase == InputActionPhase.Performed)
+            {
+                onFire?.Invoke();
+            }
+            //判断回调阶段  是否等于  停止按下
+            if (context.phase == InputActionPhase.Canceled)
+            {
+                onStopFire?.Invoke();
+            }
+
+            Debug.Log("/");
+        }
     }
 
 }
