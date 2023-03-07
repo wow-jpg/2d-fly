@@ -38,11 +38,36 @@ namespace ZJ
         /// <summary>
         /// 子弹
         /// </summary>
-        [SerializeField] GameObject projectile;
+        [SerializeField] GameObject projectile1;
+        /// <summary>
+        /// 子弹
+        /// </summary>
+        [SerializeField] GameObject projectile2;
+        /// <summary>
+        /// 子弹
+        /// </summary>
+        [SerializeField] GameObject projectile3;
+
+
         /// <summary>
         /// 枪口位置
         /// </summary>
-        [SerializeField] Transform muzzle;
+        [SerializeField] Transform muzzleMiddle;
+        /// <summary>
+        /// 枪口位置
+        /// </summary>
+        [SerializeField] Transform muzzleTop;/// <summary>
+                                             /// 枪口位置
+                                             /// </summary>
+        [SerializeField] Transform muzzleBottom;
+        [SerializeField, Range(0, 2)] int weaponPower = 0;
+
+        /// <summary>
+        /// 开火间隔
+        /// </summary>
+        [SerializeField] float fireInerval = 0.2f;
+
+        WaitForSeconds waitForFireInterval;
 
         Rigidbody2D rigid;
 
@@ -56,7 +81,7 @@ namespace ZJ
             input.onStopFire += StopFire;
         }
 
-   
+
 
         private void OnDisable()
         {
@@ -80,7 +105,7 @@ namespace ZJ
 
         void Start()
         {
-
+            waitForFireInterval = new WaitForSeconds(fireInerval);
         }
 
 
@@ -96,12 +121,12 @@ namespace ZJ
         private void Move(Vector2 moveInput)
         {
 
-            if(moveCoroutine!=null)
+            if (moveCoroutine != null)
             {
                 StopCoroutine(moveCoroutine);
             }
             Quaternion moveRotation = Quaternion.AngleAxis(moveRotationAngle * moveInput.y, Vector3.right);
-            moveCoroutine=StartCoroutine(MoveCoroutine(accelerationTime,moveInput.normalized * moveSpeed
+            moveCoroutine = StartCoroutine(MoveCoroutine(accelerationTime, moveInput.normalized * moveSpeed
                 , moveRotation));
             StartCoroutine(MovePositionLimitCoroutine());
         }
@@ -111,7 +136,7 @@ namespace ZJ
             {
                 StopCoroutine(moveCoroutine);
             }
-            moveCoroutine = StartCoroutine(MoveCoroutine(decelerationTime,Vector2.zero,Quaternion.identity));
+            moveCoroutine = StartCoroutine(MoveCoroutine(decelerationTime, Vector2.zero, Quaternion.identity));
             StopCoroutine(MovePositionLimitCoroutine());
         }
 
@@ -120,13 +145,13 @@ namespace ZJ
         /// </summary>
         /// <param name="moveVelocity"></param>
         /// <returns></returns>
-        IEnumerator MoveCoroutine(float time,Vector2 moveVelocity,Quaternion rotationAngle)
+        IEnumerator MoveCoroutine(float time, Vector2 moveVelocity, Quaternion rotationAngle)
         {
             float t = 0f;
-            while(t< time)
+            while (t < time)
             {
                 t += Time.deltaTime / time;
-                rigid.velocity = Vector2.Lerp(rigid.velocity, moveVelocity, t/time);
+                rigid.velocity = Vector2.Lerp(rigid.velocity, moveVelocity, t / time);
                 transform.rotation = Quaternion.Lerp(transform.rotation, rotationAngle, t / time);
                 yield return null;
             }
@@ -136,8 +161,8 @@ namespace ZJ
         {
             while (true)
             {
-                transform.position = Viewport.Instance.PlayerMoveablePosition(transform.position,paddingX,paddingY);
-            
+                transform.position = Viewport.Instance.PlayerMoveablePosition(transform.position, paddingX, paddingY);
+
                 yield return null;
             }
         }
@@ -148,13 +173,43 @@ namespace ZJ
 
         private void Fire()
         {
-            Debug.Log("?");
-            Instantiate(projectile, muzzle.position, Quaternion.identity);
+
+            StartCoroutine(nameof(FireCoroutine));
         }
 
         private void StopFire()
         {
-            
+            StopCoroutine(nameof(FireCoroutine));
+        }
+
+        IEnumerator FireCoroutine()
+        {
+
+            while (true)
+            {
+                yield return waitForFireInterval;
+                switch (weaponPower)
+                {
+                    case 0:
+                        PoolManager.Release(projectile1, muzzleMiddle.position);
+                        break;
+                    case 1:
+                        PoolManager.Release(projectile1, muzzleMiddle.position);
+                        PoolManager.Release(projectile2, muzzleTop.position);
+                        break;
+                    case 2:
+                        PoolManager.Release(projectile1, muzzleMiddle.position);
+                        PoolManager.Release(projectile2, muzzleTop.position);
+                        PoolManager.Release(projectile3, muzzleBottom.position);
+                        break;
+                    default:
+                        break;
+                }
+
+
+
+                yield return waitForFireInterval;
+            }
         }
 
         #endregion

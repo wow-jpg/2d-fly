@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PlayerProjectile : Projectile
 {
-    // Start is called before the first frame update
-    void Start()
+    TrailRenderer trail;
+
+    private void Awake()
     {
-        
+        trail =GetComponentInChildren<TrailRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        //Çå³ý¹ì¼£
+        trail.Clear();
     }
 }

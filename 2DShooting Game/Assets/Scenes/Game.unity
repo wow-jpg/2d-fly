@@ -328,9 +328,17 @@ MonoBehaviour:
   moveRotationAngle: 45
   paddingX: 0.7
   paddingY: 0.2
-  projectile: {fileID: 8205711107418173793, guid: ea70042017951324fa19d3b74592ca24,
+  projectile1: {fileID: 8205711107418173793, guid: d153f64c89c0cd742939b9bdd0a19d4c,
     type: 3}
-  muzzle: {fileID: 1426055356}
+  projectile2: {fileID: 8205711107418173793, guid: c8fc7557cf025a843ba2cb1d7db68e5d,
+    type: 3}
+  projectile3: {fileID: 8205711107418173793, guid: ea70042017951324fa19d3b74592ca24,
+    type: 3}
+  muzzleMiddle: {fileID: 1426055356}
+  muzzleTop: {fileID: 1174074750}
+  muzzleBottom: {fileID: 932025325}
+  weaponPower: 0
+  fireInerval: 0.1
 --- !u!50 &529058461
 Rigidbody2D:
   serializedVersion: 4
@@ -358,6 +366,60 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 529058458}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &771545032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 771545033}
+  - component: {fileID: 771545034}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &771545033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771545032}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &771545034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771545032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3753883de178e564990886b3d8c1a539, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProjectilePools:
+  - prefab: {fileID: 8205711107418173793, guid: ea70042017951324fa19d3b74592ca24,
+      type: 3}
+    size: 15
+  - prefab: {fileID: 8205711107418173793, guid: c8fc7557cf025a843ba2cb1d7db68e5d,
+      type: 3}
+    size: 15
+  - prefab: {fileID: 8205711107418173793, guid: d153f64c89c0cd742939b9bdd0a19d4c,
+      type: 3}
+    size: 15
 --- !u!1 &902674691
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,6 +533,68 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollVelocity: {x: 0.1, y: 0}
+--- !u!1 &932025324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 932025325}
+  m_Layer: 6
+  m_Name: MuzzleButtom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &932025325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932025324}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.95, y: -0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 529058462}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1174074749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1174074750}
+  m_Layer: 6
+  m_Name: MuzzleTop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1174074750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174074749}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.95, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 529058462}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1390246569
 GameObject:
   m_ObjectHideFlags: 0

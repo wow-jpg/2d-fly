@@ -41,7 +41,7 @@ namespace ZJ.Input
                 {
                     ""name"": ""Fire"",
                     ""type"": ""Button"",
-                    ""id"": ""02a6c37d-c9d4-4d62-a82a-1ae4f3749bd7"",
+                    ""id"": ""aa8b12a6-dc55-44db-913c-b2b9cffaedfa"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -183,22 +183,11 @@ namespace ZJ.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b7618ffe-2c09-4406-be52-b53aab7edfc7"",
+                    ""id"": ""b49deaf5-f95c-43ec-806c-96ca095a7477"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""PC"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4e81aa1b-da15-4791-a1c7-c31ec59d37b9"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""PC"",
+                    ""groups"": """",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
