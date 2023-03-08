@@ -6,18 +6,21 @@ public class PoolManager : MonoBehaviour
 {
 
     [SerializeField] Pool[] playerProjectilePools;
+    [SerializeField] Pool[] enemyProjectilePools;
 
     static Dictionary<GameObject, Pool> dictionary;
     void Start()
     {
         dictionary = new Dictionary<GameObject, Pool>();
         Initialize(playerProjectilePools);
+        Initialize(enemyProjectilePools);
     }
 
 #if UNITY_EDITOR
     private void OnDestroy()
     {
         CheckPoolSize(playerProjectilePools);
+        CheckPoolSize(enemyProjectilePools);
     }
 
 #endif

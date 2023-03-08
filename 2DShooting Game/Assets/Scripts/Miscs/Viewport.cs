@@ -10,6 +10,7 @@ namespace ZJ
         float maxX;
         float minY;
         float maxY;
+        float middleX;
         // Start is called before the first frame update
         void Start()
         {
@@ -21,6 +22,8 @@ namespace ZJ
             maxX = topRight.x;
             minY = bottomLeft.y;
             maxY = topRight.y;
+
+            middleX = camera.ViewportToWorldPoint(new Vector3(0.5f, 0)).x;
         }
 
         
@@ -35,6 +38,56 @@ namespace ZJ
 
             position.x = Mathf.Clamp(playerPosition.x, minX+paddingX, maxX-paddingX);
             position.y = Mathf.Clamp(playerPosition.y, minY+paddingY, maxY-paddingY);
+
+            return position;
+        }
+
+        /// <summary>
+        /// 获得随机敌人生成位置
+        /// </summary>
+        /// <param name="paddingX"></param>
+        /// <param name="paddingY"></param>
+        /// <returns></returns>
+        public Vector3 RandomEnemySpawnPosition(float paddingX,float paddingY)
+        {
+            Vector3 position = Vector3.zero;
+
+            position.x = maxX + paddingX;
+            position.y=Random.Range(minY+paddingY,maxY-paddingY);
+
+            return position;
+        }
+
+
+        /// <summary>
+        /// 限制敌人在右半边范围
+        /// </summary>
+        /// <param name="paddingX"></param>
+        /// <param name="paddingY"></param>
+        /// <returns></returns>
+        public Vector3 RandomRightHalfPosition(float paddingX,float paddingY)
+        {
+            Vector3 position = Vector3.zero;
+
+            position.x = Random.Range(middleX, maxX - paddingX);
+            position.y = Random.Range(minY + paddingY, maxY - paddingY);
+
+            return position;
+        }
+
+
+        /// <summary>
+        /// 随机敌人移动位置
+        /// </summary>
+        /// <param name="paddingX"></param>
+        /// <param name="paddingY"></param>
+        /// <returns></returns>
+        public Vector3 RandomEnemyMovePosition(float paddingX, float paddingY)
+        {
+            Vector3 position = Vector3.zero;
+
+            position.x = Random.Range(minX+paddingX, maxX - paddingX);
+            position.y = Random.Range(minY + paddingY, maxY - paddingY);
 
             return position;
         }
