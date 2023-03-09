@@ -33,6 +33,11 @@ public class StateBar : MonoBehaviour
         waitForDelayFill = new WaitForSeconds(fillDelay);
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     /// <summary>
     /// 初始化
     /// </summary>
@@ -70,8 +75,7 @@ public class StateBar : MonoBehaviour
 
             buffered=StartCoroutine(BufferedFillingCoroutine(fillImageBack));
         
-        }
-        
+        }else
         //当状态增加时
         if(currentFillAmount<targetFillAmount)
         {
