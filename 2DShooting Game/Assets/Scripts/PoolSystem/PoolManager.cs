@@ -7,6 +7,7 @@ public class PoolManager : MonoBehaviour
 
     [SerializeField] Pool[] playerProjectilePools;
     [SerializeField] Pool[] enemyProjectilePools;
+    [SerializeField] Pool[] vfxPools;
 
     static Dictionary<GameObject, Pool> dictionary;
     void Start()
@@ -14,6 +15,7 @@ public class PoolManager : MonoBehaviour
         dictionary = new Dictionary<GameObject, Pool>();
         Initialize(playerProjectilePools);
         Initialize(enemyProjectilePools);
+        Initialize(vfxPools);
     }
 
 #if UNITY_EDITOR
@@ -21,19 +23,25 @@ public class PoolManager : MonoBehaviour
     {
         CheckPoolSize(playerProjectilePools);
         CheckPoolSize(enemyProjectilePools);
+        CheckPoolSize(vfxPools);
     }
 
 #endif
 
+    /// <summary>
+    /// 尺寸检查
+    /// </summary>
+    /// <param name="pools"></param>
     void CheckPoolSize(Pool[] pools)
     {
         foreach (var pool in pools)
         {
-            if(pool.RuntimeSize>pool.Size)
+            if (pool.RuntimeSize > pool.Size)
             {
                 Debug.LogWarning("对象池实际容量大于对象池初始化容量! " +
                     "对象池实际容量:"
-                    +pool.RuntimeSize+"   对象池初始化容量："+pool.Size);
+                    + pool.RuntimeSize + "   对象池初始化容量：" + pool.Size+
+                    " "+pool.Prefab.name);
             }
         }
     }
@@ -110,7 +118,7 @@ public class PoolManager : MonoBehaviour
 #if UNITY_EDITOR
         if (!dictionary.ContainsKey(prefab))
         {
-            Debug.LogError("这人对象在对象池内没有找到" + prefab);
+            Debug.LogError("这个对象在对象池内没有找到" + prefab);
             return null;
         }
 

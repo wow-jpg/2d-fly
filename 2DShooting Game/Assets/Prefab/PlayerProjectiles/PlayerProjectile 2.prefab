@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8205711107265476157}
   - component: {fileID: 8205711107265476159}
   - component: {fileID: 8205711107265476158}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4823,8 +4823,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8205711107418173794}
   - component: {fileID: 8205711107418173795}
-  - component: {fileID: 5372575716219841080}
-  m_Layer: 0
+  - component: {fileID: 1707633867594003869}
+  - component: {fileID: 6369661109446148814}
+  m_Layer: 8
   m_Name: PlayerProjectile 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4859,9 +4860,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d483be3fb130bc40a24091574b5f1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitVFX: {fileID: 5060298685065931927, guid: 6775c68a79b34db4fa2fd4db2a4cdf74, type: 3}
+  damage: 10
   moveSpeed: 15
   moveDirection: {x: 1, y: 0.04}
---- !u!114 &5372575716219841080
+--- !u!61 &1707633867594003869
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8205711107418173793}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.028696403, y: -0.003188476}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.32191393, y: 0.17311773}
+  m_EdgeRadius: 0
+--- !u!114 &6369661109446148814
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4870,7 +4899,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8205711107418173793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3335b0ebefc77c14eb8f814b93fdae20, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b5f7379fc3e59144bf1f0f30d8a22ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   destroyGameObject: 0
@@ -4885,7 +4914,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8205711107603402177}
   - component: {fileID: 8205711107603402178}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

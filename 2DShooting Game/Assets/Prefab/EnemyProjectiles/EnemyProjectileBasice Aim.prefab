@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6669575475365358644}
   - component: {fileID: 8482844034594266591}
   - component: {fileID: 3719722430040325916}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,9 +92,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7569416219628426553}
-  - component: {fileID: 7569416219628426555}
   - component: {fileID: 9103971828874981207}
-  m_Layer: 0
+  - component: {fileID: 8438828549952195253}
+  - component: {fileID: -2409014351197429635}
+  m_Layer: 9
   m_Name: EnemyProjectileBasice Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,20 +118,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7569416219628426555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7569416219628426552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3335b0ebefc77c14eb8f814b93fdae20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyGameObject: 0
-  lifetime: 3
 --- !u!114 &9103971828874981207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,5 +130,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b047254f2064d2e4cad5f3e2beffd84b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitVFX: {fileID: 4801493125213720806, guid: 94d3dff6247d98e4cb4d8d6f0be5e291, type: 3}
+  damage: 8
   moveSpeed: 6
   moveDirection: {x: -1, y: 0}
+--- !u!58 &8438828549952195253
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7569416219628426552}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.12
+--- !u!114 &-2409014351197429635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7569416219628426552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5f7379fc3e59144bf1f0f30d8a22ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyGameObject: 0
+  lifetime: 3

@@ -11,6 +11,7 @@ namespace ZJ
     [RequireComponent(typeof(Rigidbody2D))]
     public class Player : Character
     {
+        [SerializeField] StateBar_HUD statebar_HUD;
         [SerializeField] bool regenerteHealth = true;
         [SerializeField] float healthRegenerateTime;
         [SerializeField] float healthRegeneratePercent;
@@ -118,6 +119,8 @@ namespace ZJ
             waitForFireInterval = new WaitForSeconds(fireInerval);
             waitHealthRegeerateTime = new WaitForSeconds(healthRegenerateTime);
 
+            statebar_HUD.Initialize(health, maxHealth);
+
             input.EnableGamePlayInput();
         }
 
@@ -131,8 +134,9 @@ namespace ZJ
         public override void TakeDamage(float damage)
         {
             base.TakeDamage(damage);
+            statebar_HUD.UpdateState(health, maxHealth);
 
-            if(gameObject.activeSelf)
+            if (gameObject.activeSelf)
             {
                 if(regenerteHealth)
                 {
@@ -143,6 +147,18 @@ namespace ZJ
                     healthRegenerateCoroutine=StartCoroutine(HealthRegenerateCoroutine(waitHealthRegeerateTime, healthRegeneratePercent));
                 }
             }
+        }
+
+        public override void RestoreHealth(float value)
+        {
+            base.RestoreHealth(value);
+            statebar_HUD.UpdateState(health, maxHealth);
+        }
+
+        public override void Die()
+        {
+            statebar_HUD.UpdateState(0f, maxHealth);
+            base.Die();
         }
 
         #region MOVE
@@ -177,11 +193,11 @@ namespace ZJ
         IEnumerator MoveCoroutine(float time, Vector2 moveVelocity, Quaternion rotationAngle)
         {
             float t = 0f;
-            while (t < time)
+            while (t < 1f)
             {
-                t += Time.deltaTime / time;
-                rigid.velocity = Vector2.Lerp(rigid.velocity, moveVelocity, t / time);
-                transform.rotation = Quaternion.Lerp(transform.rotation, rotationAngle, t / time);
+                t += Time.deltaTime/time;
+                rigid.velocity = Vector2.Lerp(rigid.velocity, moveVelocity, t);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotationAngle, t);
                 yield return null;
             }
         }

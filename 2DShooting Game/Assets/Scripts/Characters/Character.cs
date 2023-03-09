@@ -5,13 +5,42 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     [SerializeField] GameObject deathVFX;
-    [SerializeField] float maxHealth;
-    float health;
+    [SerializeField] protected float maxHealth;
+    [SerializeField] bool showOnHeadHealthBar = true;
+    [SerializeField] StateBar onHeadHealthBar;
+
+   protected float health;
 
 
     protected virtual void OnEnable()
     {
         health = maxHealth;
+        
+        if(showOnHeadHealthBar)
+        {
+            ShowOnHeadHealthBar();
+        }
+        else
+        {
+            HideOnHeadHealthBar();
+        
+        }
+    }
+
+    /// <summary>
+    /// ÏÔÊ¾UIÑªÌõ
+    /// </summary>
+    public void ShowOnHeadHealthBar()
+    {
+        onHeadHealthBar.gameObject.SetActive(true);
+        onHeadHealthBar.Initialize(health, maxHealth);
+    }
+    /// <summary>
+    /// Òþ²ØUIÑªÌõ
+    /// </summary>
+    public void HideOnHeadHealthBar()
+    {
+        onHeadHealthBar.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -21,6 +50,12 @@ public class Character : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         health -= damage;
+
+        if(showOnHeadHealthBar)
+        {
+            onHeadHealthBar.UpdateState(health, maxHealth);
+        }
+
 
         if(health<=0f)
         {
@@ -49,8 +84,11 @@ public class Character : MonoBehaviour
             return;
 
         health += value;
-        health=Mathf.Clamp(health,0,maxHealth); 
-
+        health=Mathf.Clamp(health,0,maxHealth);
+        if (showOnHeadHealthBar)
+        {
+            onHeadHealthBar.UpdateState(health, maxHealth);
+        }
     }
 
     /// <summary>
