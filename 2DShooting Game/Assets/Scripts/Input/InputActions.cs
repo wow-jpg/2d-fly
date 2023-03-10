@@ -46,6 +46,15 @@ namespace ZJ.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a70dbd8-af3b-4e30-b254-5dd8370853cd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -191,6 +200,28 @@ namespace ZJ.Input
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7d620a0-c27b-46da-8fb9-385fbb666ea2"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67520b8b-d6ea-437d-b4e6-f707b725c829"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -223,6 +254,7 @@ namespace ZJ.Input
             m_GamePlay = asset.FindActionMap("GamePlay", throwIfNotFound: true);
             m_GamePlay_Move = m_GamePlay.FindAction("Move", throwIfNotFound: true);
             m_GamePlay_Fire = m_GamePlay.FindAction("Fire", throwIfNotFound: true);
+            m_GamePlay_Dodge = m_GamePlay.FindAction("Dodge", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -284,12 +316,14 @@ namespace ZJ.Input
         private IGamePlayActions m_GamePlayActionsCallbackInterface;
         private readonly InputAction m_GamePlay_Move;
         private readonly InputAction m_GamePlay_Fire;
+        private readonly InputAction m_GamePlay_Dodge;
         public struct GamePlayActions
         {
             private @InputActions m_Wrapper;
             public GamePlayActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_GamePlay_Move;
             public InputAction @Fire => m_Wrapper.m_GamePlay_Fire;
+            public InputAction @Dodge => m_Wrapper.m_GamePlay_Dodge;
             public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -305,6 +339,9 @@ namespace ZJ.Input
                     @Fire.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnFire;
                     @Fire.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnFire;
                     @Fire.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnFire;
+                    @Dodge.started -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnDodge;
+                    @Dodge.performed -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnDodge;
+                    @Dodge.canceled -= m_Wrapper.m_GamePlayActionsCallbackInterface.OnDodge;
                 }
                 m_Wrapper.m_GamePlayActionsCallbackInterface = instance;
                 if (instance != null)
@@ -315,6 +352,9 @@ namespace ZJ.Input
                     @Fire.started += instance.OnFire;
                     @Fire.performed += instance.OnFire;
                     @Fire.canceled += instance.OnFire;
+                    @Dodge.started += instance.OnDodge;
+                    @Dodge.performed += instance.OnDodge;
+                    @Dodge.canceled += instance.OnDodge;
                 }
             }
         }
@@ -332,6 +372,7 @@ namespace ZJ.Input
         {
             void OnMove(InputAction.CallbackContext context);
             void OnFire(InputAction.CallbackContext context);
+            void OnDodge(InputAction.CallbackContext context);
         }
     }
 }

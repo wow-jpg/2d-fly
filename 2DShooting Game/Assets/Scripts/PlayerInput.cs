@@ -14,6 +14,7 @@ namespace ZJ.Input
 
         public event UnityAction onFire;
         public event UnityAction onStopFire;
+        public event UnityAction onDodge;
 
         InputActions inputActions;
 
@@ -78,6 +79,14 @@ namespace ZJ.Input
             }
 
          
+        }
+
+        public void OnDodge(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                onDodge?.Invoke();
+            }
         }
     }
 

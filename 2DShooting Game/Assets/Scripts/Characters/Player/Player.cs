@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using ZJ.Input;
 
@@ -73,15 +74,36 @@ namespace ZJ
         /// </summary>
         [SerializeField] float fireInerval = 0.2f;
 
+        [Header("---闪避---")]
+        /// <summary>
+        /// 闪避消耗值
+        /// </summary>
+        [SerializeField,Range(0,100)] int dodgeEnergyCost = 25;
+        [SerializeField] float maxRoll = 720f;
+        [SerializeField] float rollSpeed = 360f;
+        [SerializeField] Vector3 dodgeScale = new Vector3(0.5f, 0.5f, 0.5f);
+        float currentRoll;
+        
+        /// <summary>
+        /// 正在闪避中
+        /// </summary>
+        bool isDodging=false;
+        float dodgeDuration;
+
+
+
+
         WaitForSeconds waitForFireInterval;
         WaitForSeconds waitHealthRegeerateTime;
 
 
-        Rigidbody2D rigid;
-
+        
         Coroutine moveCoroutine;
         Coroutine healthRegenerateCoroutine;
 
+        Rigidbody2D rigid;
+
+        Collider2D collider2d;
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -89,8 +111,10 @@ namespace ZJ
             input.onStopMove += StopMove;
             input.onFire += Fire;
             input.onStopFire += StopFire;
+            input.onDodge += Dodge;
         }
 
+   
 
         private void OnDisable()
         {
@@ -98,6 +122,7 @@ namespace ZJ
             input.onStopMove -= StopMove;
             input.onFire -= Fire;
             input.onStopFire -= StopFire;
+            input.onDodge -= Dodge;
         }
 
 
@@ -108,8 +133,8 @@ namespace ZJ
         private void Awake()
         {
             rigid = GetComponent<Rigidbody2D>();
-         
-          
+
+            collider2d=GetComponent<Collider2D>();
         }
 
         void Start()
@@ -122,6 +147,8 @@ namespace ZJ
             statebar_HUD.Initialize(health, maxHealth);
 
             input.EnableGamePlayInput();
+
+            dodgeDuration = maxRoll / 2f;
         }
 
 
@@ -258,6 +285,64 @@ namespace ZJ
         }
 
         #endregion
+
+
+
+        #region 技能
+
+        private void Dodge()
+        {
+
+            if (isDodging||!PlayerEnergy.Instance.IsEnough(dodgeEnergyCost)) return;
+            StartCoroutine(nameof(DodgeCoroutine));
+        }
+
+        IEnumerator DodgeCoroutine()
+        {
+            PlayerEnergy.Instance.Use(dodgeEnergyCost);
+            collider2d.isTrigger = true;
+            isDodging = true;
+            currentRoll = 0f;
+
+        //    var scale = transform.localScale;
+
+            while (currentRoll<maxRoll)
+            {
+                currentRoll += rollSpeed * Time.deltaTime;
+                transform.rotation=Quaternion.AngleAxis(currentRoll, Vector3.right);
+
+                //if(currentRoll<maxRoll/2f)
+                //{
+                //    //scale -= Time.deltaTime / dodgeDuration * Vector3.one;
+                //    scale.x = Mathf.Clamp(scale.x - Time.deltaTime / dodgeDuration, dodgeScale.x, 1f);
+                //    scale.y = Mathf.Clamp(scale.y - Time.deltaTime / dodgeDuration, dodgeScale.y, 1f);
+                //    scale.z = Mathf.Clamp(scale.z - Time.deltaTime / dodgeDuration, dodgeScale.z, 1f);
+
+                //}
+                //else
+                //{
+                //    scale.x = Mathf.Clamp(scale.x + Time.deltaTime / dodgeDuration, dodgeScale.x, 1f);
+                //    scale.y = Mathf.Clamp(scale.y + Time.deltaTime / dodgeDuration, dodgeScale.y, 1f);
+                //    scale.z = Mathf.Clamp(scale.z + Time.deltaTime / dodgeDuration, dodgeScale.z, 1f);
+
+                //    //scale += Time.deltaTime / dodgeDuration * Vector3.one;
+                //}
+
+                 transform.localScale=BezierCurve.QuadraticPoint(Vector3.one,Vector3.one,dodgeScale,currentRoll/maxRoll);
+
+           //     transform.localScale = scale;
+
+                yield return null;
+            }
+
+
+            collider2d.isTrigger = false;
+            isDodging = false;
+        }
+
+        #endregion
+
+
     }
 
 }
